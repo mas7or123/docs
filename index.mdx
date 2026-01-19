@@ -1,14 +1,64 @@
 ---
-title: EC Anti-Cheat Documentation
-description: Official documentation for EC Anti-Cheat & EC-PANEL
+title: EC Anti-Cheat
+sidebarTitle: Overview
+description: Install, configure, and operate EC Anti-Cheat (EC_AC) and the dashboard (EC-PANEL).
 ---
 
 # EC Anti-Cheat
 
-Secure. Fast. Server-side enforced.
+<img src="/images/banner.svg" alt="EC Anti-Cheat" />
 
-<img src="/images/banner.png" />
+<Info>
+This documentation contains **temporary example values**. Replace them with your real links, IDs, and screenshots anytime.
+</Info>
 
-## Overview
+## What you get
 
-Professional FiveM anti-cheat system with dashboard and Discord integration.
+<CardGroup>
+
+<Card title="Server-side detections" icon="shield-check">
+Core protections run server-side to stay reliable and hard to bypass.
+</Card>
+
+<Card title="Dashboard control" icon="layout-dashboard">
+Manage bans, permissions, logs, and servers from a single panel.
+</Card>
+
+<Card title="Discord integration" icon="message-square">
+Commands, webhooks, and staff role verification.
+</Card>
+
+</CardGroup>
+
+## Architecture (simple)
+
+<img src="/images/architecture.svg" alt="Architecture diagram" />
+
+| Component | Purpose | Required |
+|---|---|---|
+| `EC_AC` | Main anti-cheat resource | Yes |
+| `EC-PANEL` | Dashboard sync + permissions | Yes |
+| Discord bot | Commands + logging | Recommended |
+| Dashboard | Management + visibility | Recommended |
+
+<Note>
+If you only do one thing right: **start EC_AC first** in `server.cfg`.
+</Note>
+
+## Next steps
+
+<Steps>
+
+<Step title="Install">
+Go to **Startup & Installation** and follow the exact folder + `server.cfg` rules.
+</Step>
+
+<Step title="Configure">
+Select your framework in **both** resources and set up panel permissions.
+</Step>
+
+<Step title="Connect Discord">
+Invite the bot, create the Eagle role, and generate webhooks.
+</Step>
+
+</Steps>

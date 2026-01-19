@@ -18,7 +18,7 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Getting Started",
+            "group": "Getting started",
             "pages": [
               "index",
               "startup",
@@ -27,20 +27,18 @@
             ]
           },
           {
-            "group": "Usage",
+            "group": "Operations",
             "pages": [
-              "discord-commands"
-            ]
-          },
-          {
-            "group": "Help",
-            "pages": [
+              "discord-commands",
               "faq"
             ]
           }
         ]
       }
-    ]
+    ],
+    "global": {
+      "anchors": []
+    }
   },
   "navbar": {
     "links": [

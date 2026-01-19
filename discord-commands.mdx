@@ -1,13 +1,62 @@
 ---
 title: Discord Commands
-description: All commands
+sidebarTitle: Commands
+description: Command reference for moderation and evidence collection.
 ---
 
 # Discord Commands
 
-| Command | Description |
-|--------|-------------|
-| /ban | Ban player |
-| /unban | Unban |
-| /screenshot | Screenshot |
-| /createwebhooks | Create channels |
+<img src="/images/commands.svg" alt="Commands" />
+
+<Info>
+Examples are placeholders. Replace option names with your real slash-command schema.
+</Info>
+
+## Command list
+
+| Command | What it does | Typical permission |
+|---|---|---|
+| `/ban` | Ban a player | Admin |
+| `/unban` | Unban a player | Admin |
+| `/screenshot` | Capture player screen | Moderator |
+| `/createwebhooks` | Setup channels/webhooks | Owner |
+
+## /ban
+
+<CodeGroup>
+
+```text Example
+/ban id: 23 reason: "Cheating"
+```
+
+```text Example (with duration)
+/ban id: 23 reason: "Cheating" duration: "7d"
+```
+
+</CodeGroup>
+
+## /unban
+
+```text
+/unban identifier: "license:xxxxx"
+```
+
+## /screenshot
+
+```text
+/screenshot id: 23
+```
+
+<Note>
+Screenshots should log to a dedicated channel so evidence doesn’t get buried.
+</Note>
+
+## /createwebhooks
+
+```text
+/createwebhooks
+```
+
+<Warning>
+Only run this with proper bot permissions. Otherwise it creates partial setup and you’ll chase missing logs later.
+</Warning>

@@ -1,11 +1,65 @@
 ---
 title: FAQ
-description: Common issues
+sidebarTitle: FAQ
+description: The common issues people hit and the fixes that actually work.
 ---
 
 # FAQ
 
-<img src="/images/faq.png" />
+<img src="/images/faq.svg" alt="FAQ" />
 
-- Disable global bans via dashboard.
-- Linux supported.
+## How to turn off global bans
+
+<Tip>
+Use global bans only if you trust your network rules and appeal flow. Otherwise, keep it off.
+</Tip>
+
+**Dashboard → Settings → Security → Global bans → Disable**
+
+## How to unban or whitelist a global ban
+
+<Tabs>
+
+<Tab title="Whitelist">
+
+- Dashboard → Global bans → Search player → **Whitelist**
+- Add a note for staff audit
+
+</Tab>
+
+<Tab title="Support review">
+
+- Open a support ticket
+- Provide identifiers + evidence
+
+</Tab>
+
+</Tabs>
+
+## How to unban a spoofer ban
+
+<Warning>
+Spoofer bans should not be casually removed. If you unban blindly, you invite repeat abuse.
+</Warning>
+
+Typical process:
+1. Verify evidence
+2. Confirm identifiers
+3. Unban in dashboard
+4. (Optional) add a whitelist entry
+
+## How to change the server IP
+
+1. Change IP on host
+2. Update dashboard server settings
+3. Restart FXServer
+
+## Does the anti-cheat work on Linux?
+
+Yes. Typical supported setups:
+- Ubuntu / Debian
+- Recommended: latest FXServer
+
+<Check>
+If FXServer runs, the anti-cheat resource runs. The usual Linux issue is file permissions, not compatibility.
+</Check>

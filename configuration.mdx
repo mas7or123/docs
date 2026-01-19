@@ -1,20 +1,97 @@
 ---
 title: Configuration
-description: Framework & permissions
+sidebarTitle: Configuration
+description: Framework selection, EC-PANEL permissions, and safe defaults.
 ---
 
 # Configuration
 
-<img src="/images/settings.png" />
+<img src="/images/settings.svg" alt="Settings" />
 
-## Framework
+<Info>
+You must configure **both** `EC_AC` and `EC-PANEL`. If they mismatch, permissions and player resolution will break.
+</Info>
 
-Set same framework in both resources.
+## 1) Framework selection
+
+Set the same framework in both:
+
+- `EC_AC/config.lua`
+- `EC-PANEL/config.lua`
+
+<Tabs>
+
+<Tab title="ESX">
 
 ```lua
 Framework = "ESX"
 ```
 
-## Permissions
+</Tab>
 
-Roles: Owner, Admin, Moderator, Viewer.
+<Tab title="QBCore">
+
+```lua
+Framework = "QBCore"
+```
+
+</Tab>
+
+<Tab title="Standalone">
+
+```lua
+Framework = "Standalone"
+```
+
+</Tab>
+
+</Tabs>
+
+<Note>
+Temporary example file paths above — keep your real paths.
+</Note>
+
+## 2) EC-PANEL permissions (best practice)
+
+Use **least privilege**. Don’t give everyone Owner access.
+
+<CardGroup>
+
+<Card title="Owner" icon="crown">
+Everything: settings, servers, bans, logs, integrations.
+</Card>
+
+<Card title="Admin" icon="user-cog">
+Moderation actions: ban/unban, screenshots, logs.
+</Card>
+
+<Card title="Moderator" icon="user">
+Limited actions: screenshots + report handling.
+</Card>
+
+<Card title="Viewer" icon="eye">
+Read-only: dashboards + logs.
+</Card>
+
+</CardGroup>
+
+### Recommended mapping
+
+| Discord Role | Panel Role | Why |
+|---|---|---|
+| Eagle | Admin | Staff actions |
+| Senior Eagle | Owner | Few people only |
+| Support | Viewer | Can read logs without power |
+
+<Warning>
+If your Discord role mapping is wrong, you’ll either lock staff out or give them too much control.
+</Warning>
+
+## 3) Logging defaults
+
+Start with:
+- detections → private staff channel
+- screenshots → separate channel
+- system alerts → separate channel
+
+You’ll avoid noise and keep evidence clean.

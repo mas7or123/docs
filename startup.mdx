@@ -1,20 +1,87 @@
 ---
 title: Startup & Installation
-description: Install guide
+sidebarTitle: Installation
+description: Correct install steps and the two mistakes that break most setups.
 ---
 
 # Startup & Installation
 
-<img src="/images/install.png" />
+<img src="/images/install.svg" alt="Installation" />
 
-## Steps
+<Warning>
+Do **not** rename the resource folder or the script name. Renaming breaks internal references.
+</Warning>
 
-1. Download ZIP.
-2. Extract.
-3. Copy folder to `resources/`.
-4. Do not rename.
-5. Add to server.cfg:
+## Download
 
-```cfg
+You will receive a ZIP from the official store / dashboard download page.
+
+<Tip>
+Keep your ZIP versioned (example: `ec_ac_1.2.3.zip`) so you can roll back fast if needed.
+</Tip>
+
+## Install steps
+
+<Steps>
+
+<Step title="Extract">
+Unzip the download on your machine.
+</Step>
+
+<Step title="Move resource">
+Drag & drop the folder into your server:
+`resources/`
+</Step>
+
+<Step title="Do not rename">
+Keep the folder name exactly as delivered (example: `EC_AC`).
+</Step>
+
+<Step title="Ensure first in server.cfg">
+Put it at the very top of `server.cfg` so it starts before anything else.
+</Step>
+
+</Steps>
+
+<CodeGroup>
+
+```cfg server.cfg (minimum)
 ensure EC_AC
+ensure EC-PANEL
 ```
+
+```cfg server.cfg (recommended order)
+ensure EC_AC
+ensure EC-PANEL
+
+# frameworks next
+ensure oxmysql
+ensure es_extended
+
+# your other resources after
+ensure [standalone]
+ensure [jobs]
+ensure [cars]
+```
+
+</CodeGroup>
+
+## Verify it’s running
+
+Check these quickly:
+
+- Server console shows an EC_AC startup line (replace with your real log text later).
+- Dashboard shows server status: **Online**
+- Discord bot appears: **Online**
+
+<Check>
+If all 3 are true, the install is basically done.
+</Check>
+
+## Common failures
+
+| Problem | What you’ll see | Fix |
+|---|---|---|
+| Resource renamed | “missing exports / missing file” errors | Restore original folder name |
+| EC_AC started late | false positives / missing permissions | Move `ensure EC_AC` to top |
+| Wrong folder location | resource not found | ensure inside `resources/` |

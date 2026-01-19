@@ -1,10 +1,60 @@
 ---
 title: Discord Integration
-description: Setup Discord
+sidebarTitle: Discord Setup
+description: Link your dashboard, invite the bot, create roles, and generate webhooks.
 ---
 
 # Discord Integration
 
-<img src="/images/discord.png" />
+<img src="/images/discord.svg" alt="Discord" />
 
-Steps to connect dashboard, invite bot, and create Eagle role.
+## Link your Discord server
+
+<Steps>
+
+<Step title="Open dashboard">
+Go to **Settings → Discord Integration**.
+</Step>
+
+<Step title="Connect server">
+Click **Connect Server** and authorize.
+</Step>
+
+<Step title="Confirm">
+Dashboard should show: **Connected** (replace with real UI labels later).
+</Step>
+
+</Steps>
+
+## Invite the bot
+
+<Warning>
+Give the bot **Administrator**. If you restrict it, webhooks and command actions will randomly fail.
+</Warning>
+
+## Create the Eagle role
+
+1. Discord → Server Settings → Roles
+2. Create role: `Eagle`
+3. Assign it to admins
+
+<img src="/images/roles.svg" alt="Roles" />
+
+## Create webhooks
+
+Run:
+
+```text
+/createwebhooks
+```
+
+This should create channels + webhooks for:
+
+- Logs
+- Detections
+- Screenshots
+- Alerts
+
+<Check>
+After this, you should see logs appear when the server starts.
+</Check>
