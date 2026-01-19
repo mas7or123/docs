@@ -8,27 +8,39 @@
     "dark": "#f5a524"
   },
   "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/logo.png",
+    "dark": "/logo/logo.png"
+  },
   "navigation": {
     "tabs": [
       {
         "tab": "Guides",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Getting Started",
             "pages": [
-              "index"
+              "index",
+              "startup",
+              "configuration",
+              "discord-integration"
+            ]
+          },
+          {
+            "group": "Usage",
+            "pages": [
+              "discord-commands"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "faq"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": []
-    }
-  },
-  "logo": {
-    "light": "/logo/logo.png",
-    "dark": "/logo/logo.png"
+    ]
   },
   "navbar": {
     "links": [
@@ -42,9 +54,6 @@
       "label": "Dashboard",
       "href": "https://eagleanti.com"
     }
-  },
-  "contextual": {
-    "options": []
   },
   "footer": {
     "socials": {
