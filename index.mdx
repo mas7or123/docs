@@ -1,64 +1,62 @@
 ---
-title: EC Anti-Cheat
+title: Eagle Anti-Cheat
 sidebarTitle: Overview
-description: Install, configure, and operate EC Anti-Cheat (EC_AC) and the dashboard (EC-PANEL).
+description: Install, configure, and operate Eagle (anti-cheat) and EC-PANEL (dashboard sync).
 ---
 
-# EC Anti-Cheat
+# Eagle Anti-Cheat
 
-<img src="/images/banner.svg" alt="EC Anti-Cheat" />
+<img src="/images/banner.svg" alt="Eagle Anti-Cheat" />
 
 <Info>
-This documentation contains **temporary example values**. Replace them with your real links, IDs, and screenshots anytime.
+This documentation contains **temporary example values** (download links, IDs, screenshots). Replace them with your real data.
 </Info>
+
+## Download
+
+<Button href="https://download.example.com/eagle/latest.zip" icon="download">
+Download Eagle (Latest)
+</Button>
+
+<Note>
+Replace the URL above with your real direct download link (store, portal, or signed link).
+</Note>
 
 ## What you get
 
 <CardGroup>
-
-<Card title="Server-side detections" icon="shield-check">
-Core protections run server-side to stay reliable and hard to bypass.
-</Card>
-
-<Card title="Dashboard control" icon="layout-dashboard">
-Manage bans, permissions, logs, and servers from a single panel.
-</Card>
-
-<Card title="Discord integration" icon="message-square">
-Commands, webhooks, and staff role verification.
-</Card>
-
+  <Card title="Server-side detections" icon="shield-check">
+    Core protections run server-side to stay reliable and hard to bypass.
+  </Card>
+  <Card title="Dashboard control" icon="layout-dashboard">
+    Manage bans, permissions, logs, and servers from a single panel.
+  </Card>
+  <Card title="Discord commands" icon="message-square">
+    Staff actions and evidence collection via slash commands.
+  </Card>
 </CardGroup>
 
-## Architecture (simple)
+## Architecture
 
 <img src="/images/architecture.svg" alt="Architecture diagram" />
 
 | Component | Purpose | Required |
 |---|---|---|
-| `EC_AC` | Main anti-cheat resource | Yes |
+| `Eagle` | Main anti-cheat resource | Yes |
 | `EC-PANEL` | Dashboard sync + permissions | Yes |
 | Discord bot | Commands + logging | Recommended |
 | Dashboard | Management + visibility | Recommended |
 
-<Note>
-If you only do one thing right: **start EC_AC first** in `server.cfg`.
-</Note>
-
 ## Next steps
 
 <Steps>
-
-<Step title="Install">
-Go to **Startup & Installation** and follow the exact folder + `server.cfg` rules.
-</Step>
-
-<Step title="Configure">
-Select your framework in **both** resources and set up panel permissions.
-</Step>
-
-<Step title="Connect Discord">
-Invite the bot, create the Eagle role, and generate webhooks.
-</Step>
-
+  <Step title="Install">
+    Put the resources under your FiveM resources category folder **[EC]** and ensure **Eagle** first.
+  </Step>
+  <Step title="Configure">
+    Select your framework in both `Eagle` and `EC-PANEL`, then map permissions.
+  </Step>
+  <Step title="Connect Discord">
+    Invite the bot, create the Eagle staff role, and generate webhooks.
+  </Step>
 </Steps>

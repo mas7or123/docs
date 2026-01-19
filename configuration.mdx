@@ -9,89 +9,74 @@ description: Framework selection, EC-PANEL permissions, and safe defaults.
 <img src="/images/settings.svg" alt="Settings" />
 
 <Info>
-You must configure **both** `EC_AC` and `EC-PANEL`. If they mismatch, permissions and player resolution will break.
+Configure **both** resources. If `Eagle` and `EC-PANEL` don’t match, permissions and player identification will break.
 </Info>
 
 ## 1) Framework selection
 
-Set the same framework in both:
+Edit these files (example paths):
 
-- `EC_AC/config.lua`
-- `EC-PANEL/config.lua`
+- `resources/[EC]/Eagle/config.lua`
+- `resources/[EC]/EC-PANEL/config.lua`
 
 <Tabs>
-
-<Tab title="ESX">
-
+  <Tab title="ESX">
 ```lua
 Framework = "ESX"
 ```
-
-</Tab>
-
-<Tab title="QBCore">
-
+  </Tab>
+  <Tab title="QBCore">
 ```lua
 Framework = "QBCore"
 ```
-
-</Tab>
-
-<Tab title="Standalone">
-
+  </Tab>
+  <Tab title="Standalone">
 ```lua
 Framework = "Standalone"
 ```
-
-</Tab>
-
+  </Tab>
 </Tabs>
 
-<Note>
-Temporary example file paths above — keep your real paths.
-</Note>
+<Tip>
+If you don’t use a framework, pick **Standalone** and keep permissions Discord-based.
+</Tip>
 
-## 2) EC-PANEL permissions (best practice)
+## 2) EC-PANEL permissions
 
-Use **least privilege**. Don’t give everyone Owner access.
+Use least privilege. Keep “Owner” for a small number of trusted people.
 
 <CardGroup>
-
-<Card title="Owner" icon="crown">
-Everything: settings, servers, bans, logs, integrations.
-</Card>
-
-<Card title="Admin" icon="user-cog">
-Moderation actions: ban/unban, screenshots, logs.
-</Card>
-
-<Card title="Moderator" icon="user">
-Limited actions: screenshots + report handling.
-</Card>
-
-<Card title="Viewer" icon="eye">
-Read-only: dashboards + logs.
-</Card>
-
+  <Card title="Owner" icon="crown">
+    Full access: settings, servers, bans, integrations.
+  </Card>
+  <Card title="Admin" icon="user-cog">
+    Moderation: ban/unban, screenshots, logs.
+  </Card>
+  <Card title="Moderator" icon="user">
+    Limited actions: screenshots, reports.
+  </Card>
+  <Card title="Viewer" icon="eye">
+    Read-only: logs and dashboards.
+  </Card>
 </CardGroup>
 
-### Recommended mapping
+### Recommended Discord mapping (example)
 
-| Discord Role | Panel Role | Why |
+| Discord role | Panel role | Why |
 |---|---|---|
-| Eagle | Admin | Staff actions |
-| Senior Eagle | Owner | Few people only |
-| Support | Viewer | Can read logs without power |
+| Eagle | Admin | Normal staff actions |
+| Eagle Lead | Owner | Very few people |
+| Support | Viewer | Read logs without power |
 
 <Warning>
-If your Discord role mapping is wrong, you’ll either lock staff out or give them too much control.
+If your role mapping is wrong, you either lock staff out or give them too much control.
 </Warning>
 
 ## 3) Logging defaults
 
-Start with:
-- detections → private staff channel
-- screenshots → separate channel
-- system alerts → separate channel
+Start with separate channels for:
+- detections
+- screenshots
+- system alerts
 
-You’ll avoid noise and keep evidence clean.
+This keeps evidence clean and avoids noise.

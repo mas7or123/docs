@@ -45,6 +45,10 @@
       {
         "label": "Support",
         "href": "https://discord.gg/fQq46nekec"
+      },
+      {
+        "label": "Status",
+        "href": "https://status.example.com"
       }
     ],
     "primary": {

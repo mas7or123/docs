@@ -1,7 +1,7 @@
 ---
 title: Startup & Installation
 sidebarTitle: Installation
-description: Correct install steps and the two mistakes that break most setups.
+description: Correct folder structure, server.cfg order, and verification.
 ---
 
 # Startup & Installation
@@ -9,79 +9,70 @@ description: Correct install steps and the two mistakes that break most setups.
 <img src="/images/install.svg" alt="Installation" />
 
 <Warning>
-Do **not** rename the resource folder or the script name. Renaming breaks internal references.
+Most installs break for two reasons: **renaming the resource** or **starting it late**. Don’t do either.
 </Warning>
 
-## Download
+## Folder structure (required)
 
-You will receive a ZIP from the official store / dashboard download page.
+Your resources must be placed like this:
 
-<Tip>
-Keep your ZIP versioned (example: `ec_ac_1.2.3.zip`) so you can roll back fast if needed.
-</Tip>
+```text
+server/
+  resources/
+    [EC]/
+      Eagle/
+      EC-PANEL/
+```
+
+<Note>
+`[EC]` is just a category folder. The resource names are **Eagle** and **EC-PANEL**.
+</Note>
 
 ## Install steps
 
 <Steps>
-
-<Step title="Extract">
-Unzip the download on your machine.
-</Step>
-
-<Step title="Move resource">
-Drag & drop the folder into your server:
-`resources/`
-</Step>
-
-<Step title="Do not rename">
-Keep the folder name exactly as delivered (example: `EC_AC`).
-</Step>
-
-<Step title="Ensure first in server.cfg">
-Put it at the very top of `server.cfg` so it starts before anything else.
-</Step>
-
+  <Step title="Extract">
+    Unzip the download on your machine.
+  </Step>
+  <Step title="Place resources">
+    Move the folders into: `resources/[EC]/`
+  </Step>
+  <Step title="Do not rename">
+    Keep folder names **exactly**: `Eagle` and `EC-PANEL`.
+  </Step>
+  <Step title="Ensure order">
+    Ensure **Eagle first** in `server.cfg`.
+  </Step>
 </Steps>
 
 <CodeGroup>
-
 ```cfg server.cfg (minimum)
-ensure EC_AC
+ensure Eagle
 ensure EC-PANEL
 ```
-
 ```cfg server.cfg (recommended order)
-ensure EC_AC
+ensure Eagle
 ensure EC-PANEL
 
-# frameworks next
+# framework + DB next
 ensure oxmysql
 ensure es_extended
 
-# your other resources after
+# everything else after
 ensure [standalone]
 ensure [jobs]
 ensure [cars]
 ```
-
 </CodeGroup>
 
 ## Verify it’s running
 
-Check these quickly:
+<Check>
+You should see all of these:
+</Check>
 
-- Server console shows an EC_AC startup line (replace with your real log text later).
+- Server console shows an Eagle startup line (replace with your real log text later)
 - Dashboard shows server status: **Online**
 - Discord bot appears: **Online**
 
-<Check>
-If all 3 are true, the install is basically done.
-</Check>
-
-## Common failures
-
-| Problem | What you’ll see | Fix |
-|---|---|---|
-| Resource renamed | “missing exports / missing file” errors | Restore original folder name |
-| EC_AC started late | false positives / missing permissions | Move `ensure EC_AC` to top |
-| Wrong folder location | resource not found | ensure inside `resources/` |
+<img src="/images/console.svg" alt="Console output example" />

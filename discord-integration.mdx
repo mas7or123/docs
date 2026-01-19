@@ -1,7 +1,7 @@
 ---
 title: Discord Integration
 sidebarTitle: Discord Setup
-description: Link your dashboard, invite the bot, create roles, and generate webhooks.
+description: Connect dashboard, invite bot, set staff role, and create webhooks.
 ---
 
 # Discord Integration
@@ -11,32 +11,36 @@ description: Link your dashboard, invite the bot, create roles, and generate web
 ## Link your Discord server
 
 <Steps>
-
-<Step title="Open dashboard">
-Go to **Settings → Discord Integration**.
-</Step>
-
-<Step title="Connect server">
-Click **Connect Server** and authorize.
-</Step>
-
-<Step title="Confirm">
-Dashboard should show: **Connected** (replace with real UI labels later).
-</Step>
-
+  <Step title="Open dashboard">
+    Go to **Settings → Discord Integration**.
+  </Step>
+  <Step title="Connect server">
+    Click **Connect Server** and authorize.
+  </Step>
+  <Step title="Confirm">
+    Dashboard shows: **Connected** (replace with your real UI labels later).
+  </Step>
 </Steps>
 
 ## Invite the bot
 
+<Button href="https://discord.com/oauth2/authorize?client_id=000000000000000000&permissions=8&scope=bot%20applications.commands" icon="bot">
+Invite Discord Bot
+</Button>
+
+<Note>
+Replace the `client_id` in the invite URL with your real bot application ID.
+</Note>
+
 <Warning>
-Give the bot **Administrator**. If you restrict it, webhooks and command actions will randomly fail.
+Give the bot **Administrator**. If you restrict it, webhooks and command actions will fail or partially work.
 </Warning>
 
-## Create the Eagle role
+## Create the staff role
 
 1. Discord → Server Settings → Roles
 2. Create role: `Eagle`
-3. Assign it to admins
+3. Assign it to admins/mods
 
 <img src="/images/roles.svg" alt="Roles" />
 
@@ -45,16 +49,15 @@ Give the bot **Administrator**. If you restrict it, webhooks and command actions
 Run:
 
 ```text
-/createwebhooks
+/createwebhooks server: "main"
 ```
 
-This should create channels + webhooks for:
-
+This creates channels + webhooks for:
 - Logs
 - Detections
 - Screenshots
 - Alerts
 
 <Check>
-After this, you should see logs appear when the server starts.
+After setup, you should see logs appear when the server starts.
 </Check>
