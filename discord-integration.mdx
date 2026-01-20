@@ -4,37 +4,40 @@ sidebarTitle: Discord Setup
 description: Connect dashboard, invite bot, set staff role, and create webhooks.
 ---
 
-# Discord Integration
-
-<img src="/images/discord.svg" alt="Discord" />
-
 ## Link your Discord server
 
 <Steps>
-  <Step title="Open dashboard">
-    Go to **Settings → Discord Integration**.
+  <Step title="Open the Eagle dashboard">
+    Go to the **[Eagle Dashboard](https://eagleanti.com/en/dashboard)** in your browser and log in to your account.
   </Step>
-  <Step title="Connect server">
-    Click **Connect Server** and authorize.
+
+  <Step title="Select your server">
+    From the server list, click the server you want to configure.
   </Step>
-  <Step title="Confirm">
-    Dashboard shows: **Connected** (replace with your real UI labels later).
+
+  <Step title="Open server settings">
+    Inside your server page, click **Settings** to open the configuration panel.
+  </Step>
+
+  <Step title="Set your Discord logs server">
+    Scroll to the **Webhooks** section and enter your **Discord Server ID** and save your settings.
+
+    <Note>
+    This must be the same Discord server where you will invite the bot to receive logs and alerts.
+    </Note>
+
+    If you don’t know your server ID, enable Discord Developer Mode and copy it from your server settings.
+  </Step>
+
+  <Step title="Invite the Discord bot">
+    Click here to invite the bot to your logs server:
+
+    👉 **[Invite Eagle Bot](https://discord.com/oauth2/authorize?client_id=1064249951099572354&permissions=8&scope=bot)**
   </Step>
 </Steps>
 
-## Invite the bot
 
-<Button href="https://discord.com/oauth2/authorize?client_id=000000000000000000&permissions=8&scope=bot%20applications.commands" icon="bot">
-Invite Discord Bot
-</Button>
 
-<Note>
-Replace the `client_id` in the invite URL with your real bot application ID.
-</Note>
-
-<Warning>
-Give the bot **Administrator**. If you restrict it, webhooks and command actions will fail or partially work.
-</Warning>
 
 ## Create the staff role
 
@@ -42,22 +45,18 @@ Give the bot **Administrator**. If you restrict it, webhooks and command actions
 2. Create role: `Eagle`
 3. Assign it to admins/mods
 
-<img src="/images/roles.svg" alt="Roles" />
-
 ## Create webhooks
 
 Run:
 
 ```text
-/createwebhooks server: "main"
+/createwebhooks
 ```
 
 This creates channels + webhooks for:
 - Logs
 - Detections
-- Screenshots
-- Alerts
 
 <Check>
-After setup, you should see logs appear when the server starts.
+After setup, you should see logs appear in the dashboard config.
 </Check>
