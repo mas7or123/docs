@@ -1,105 +1,91 @@
 ---
-title: Installation
-sidebarTitle: Installation
+title: Installation Guide
+sidebarTitle: Installation Guide
 description: Follow these steps to install Eagle Anti-Cheat on your FiveM server.
 ---
 
-# Installation Guide
+<Steps>
+  <Step title="Purchase a License Key">
+    Purchase a license key from our **[Store](https://eagleanti.com/en/products)**.
+  </Step>
 
-Follow these steps to set up **Eagle Anti-Cheat** on your FiveM server.
+  <Step title="Download the Resource">
+    After purchasing, open your **[Dashboard](https://eagleanti.com/en/dashboard)** and click **Download** to get the latest version.
+  </Step>
 
----
+  <Step title="Install the Resource">
+    Extract the downloaded ZIP and place the folders into your server’s `resources` directory under **`[EC]`**.
 
-## Purchase a License Key
+    ### Required folder structure
 
-Purchase a license key from our **[Store](https://eagleanti.com/en/products)**.
+    ```text
+    server/
+      resources/
+        [EC]/
+          EC_AC/
+          EC-PANEL/
+    ```
 
----
+    <Warning>
+    Do **not** rename `EC_AC`, `EC-PANEL`, or the `[EC]` bracket folder format. Renaming can break internal references and updates.
+    </Warning>
+  </Step>
 
-## Download the Resource
+  <Step title="Add to server.cfg">
+    Open your **[`server.cfg`](https://docs.fivem.net/docs/server-manual/setting-up-a-server-vanilla/#servercfg)** and ensure **[EC]** starts **first**.
 
-After purchasing, open your **[Dashboard](https://eagleanti.com/en/dashboard)** and click **Download** to get the latest version.
+    <CodeGroup>
+    ```cfg server.cfg (minimum)
+    ensure [EC]
+    ```
 
----
+    ```cfg server.cfg (recommended order)
+    ensure [EC]
 
-## Install the Resource
+    sv_hostname "change-me built with FiveM Basic Server!"
+    sets sv_projectName "[FiveM Basic Server] change-me"
+    sets sv_projectDesc "Recipe for the base resources required to run a minimal FiveM server."
+    sets tags "default, deployer"
+    sets locale "root-AQ"
 
-Extract the downloaded ZIP and place the folders into your server’s `resources` directory under **`[EC]`**.
+    ## You CAN edit the following:
+    sv_enforceGameBuild 3258 #mp2024_01 - Bottom Dollar Bounties
+    sv_licenseKey "xxxxx"
+    sv_maxclients 48
+    endpoint_add_tcp "0.0.0.0:30120"
+    endpoint_add_udp "0.0.0.0:30120"
+    set steam_webApiKey "none"
+    set resources_useSystemChat true
 
-### Required folder structure
+    set mumble_allowExternalConnections true
+    set mumble_adminPass "YourMumbleServerPassword"
+    setr mumble_adminPass "YourMumbleServerPassword"
 
-```text
-server/
-  resources/
-    [EC]/
-      EC_AC/
-      EC-PANEL/
-```
+    ## These resources will start by default.
+    ensure mapmanager
+    ensure chat
+    ensure spawnmanager
+    ensure sessionmanager
+    ensure basic-gamemode
+    ensure hardcap
+    ```
+    </CodeGroup>
 
-<Warning>
-Do **not** rename `EC_AC`, `EC-PANEL`, or the `[EC]` bracket folder format. Renaming can break internal references and updates.
-</Warning>
+    <Check>
+    If `ensure [EC]` is at the top, you avoid most problems.
+    </Check>
+  </Step>
 
----
+  <Step title="Restart the Server">
+    Restart your server to apply the changes.
 
-## Add to server.cfg
+    After restart, verify:
 
-Open your **server.cfg** and ensure [EC] starts **first**.
+    - Console shows an Eagle startup message after all resources are loaded
+    - Dashboard shows the server as **Online**
+  </Step>
 
-<CodeGroup>
-```cfg server.cfg (minimum)
-ensure [EC]
-```
-
-```cfg server.cfg (recommended order)
-ensure [EC]
-
-sv_hostname "change-me built with FiveM Basic Server!"
-sets sv_projectName "[FiveM Basic Server] change-me"
-sets sv_projectDesc "Recipe for the base resources required to run a minimal FiveM server."
-sets tags "default, deployer"
-sets locale "root-AQ"
-
-## You CAN edit the following:
-sv_enforceGameBuild 3258 #mp2024_01	- Bottom Dollar Bounties
-sv_licenseKey "xxxxx"
-sv_maxclients 48
-endpoint_add_tcp "0.0.0.0:30120"
-endpoint_add_udp "0.0.0.0:30120"
-set steam_webApiKey "none"
-set resources_useSystemChat true
-
-set mumble_allowExternalConnections true
-set mumble_adminPass "YourMumbleServerPassword"
-setr mumble_adminPass "YourMumbleServerPassword"
-
-## These resources will start by default.
-ensure mapmanager
-ensure chat
-ensure spawnmanager
-ensure sessionmanager
-ensure basic-gamemode
-ensure hardcap
-```
-</CodeGroup>
-
-<Check>
-If `ensure [EC]` is at the top, you avoid most problems.
-</Check>
-
----
-
-## Restart the Server
-
-Restart your server to apply the changes.
-
-After restart, verify:
-
-- Console shows an Eagle startup message after all resources are loaded
-- Dashboard shows the server as **Online**
-
----
-
-## Installation Guide Video
-
-For a full walkthrough, watch the **[Installation Guide Video](https://youtu.be/cAjfL6IA6Zc)**.
+  <Step title="Installation Guide Video">
+    For a full walkthrough, watch the **[Installation Guide Video](https://youtu.be/cAjfL6IA6Zc)**.
+  </Step>
+</Steps>
