@@ -12,7 +12,9 @@
     "light": "/logo/logo.png",
     "dark": "/logo/logo.png"
   },
-  "library": "lucide",
+  "icons": {
+    "library": "lucide"
+  },
   "navigation": {
     "tabs": [
       {
