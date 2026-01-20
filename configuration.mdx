@@ -1,20 +1,3 @@
----
-title: Configuration
-sidebarTitle: Configuration
-description: Framework selection, EC-PANEL permissions, and safe defaults.
----
-
-## Framework selection
-
-You must set **both** correctly.
-
-### Files to edit
-
-- `resources/[EC]/EC_AC/configs/shared_config.lua`
-- `resources/[EC]/EC-PANEL/config.lua`
-
----
-
 <Steps>
   <Step title="Configure EC_AC">
     Open:
@@ -87,6 +70,48 @@ You must set **both** correctly.
       </Tab>
     </Tabs>
   </Step>
-</Steps>
 
----
+  <Step title="Set language and Discord appeal link">
+    Open:
+
+    ```text
+    resources/[EC]/EC_AC/configs/shared_config.lua
+    ```
+
+    Configure the interface language:
+
+    <Tabs>
+      <Tab title="English">
+      ```lua
+      EG_AC.Locale = "en"
+      ```
+      </Tab>
+
+      <Tab title="German">
+      ```lua
+      EG_AC.Locale = "de"
+      ```
+      </Tab>
+
+      <Tab title="Arabic">
+      ```lua
+      EG_AC.Locale = "ar"
+      ```
+      </Tab>
+    </Tabs>
+
+    Set the Discord invite link shown to banned players:
+
+    ```lua
+    EG_AC.DiscordServer = "https://discord.gg/yourserver"
+    ```
+
+    <Tip>
+    Use a permanent Discord invite. If the link expires, banned players won’t be able to appeal.
+    </Tip>
+
+    <Warning>
+    This link is displayed directly in the ban screen. Make sure it points to your **official support server**.
+    </Warning>
+  </Step>
+</Steps>
