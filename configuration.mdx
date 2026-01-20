@@ -4,79 +4,89 @@ sidebarTitle: Configuration
 description: Framework selection, EC-PANEL permissions, and safe defaults.
 ---
 
-# Configuration
+## Framework selection
 
-<img src="/images/settings.svg" alt="Settings" />
+You must set **both** correctly.
 
-<Info>
-Configure **both** resources. If `Eagle` and `EC-PANEL` don’t match, permissions and player identification will break.
-</Info>
+### Files to edit
 
-## 1) Framework selection
-
-Edit these files (example paths):
-
-- `resources/[EC]/Eagle/config.lua`
+- `resources/[EC]/EC_AC/configs/shared_config.lua`
 - `resources/[EC]/EC-PANEL/config.lua`
 
-<Tabs>
-  <Tab title="ESX">
-```lua
-Framework = "ESX"
-```
-  </Tab>
-  <Tab title="QBCore">
-```lua
-Framework = "QBCore"
-```
-  </Tab>
-  <Tab title="Standalone">
-```lua
-Framework = "Standalone"
-```
-  </Tab>
-</Tabs>
+---
 
-<Tip>
-If you don’t use a framework, pick **Standalone** and keep permissions Discord-based.
-</Tip>
+<Steps>
+  <Step title="Configure EC_AC">
+    Open:
 
-## 2) EC-PANEL permissions
+    ```text
+    resources/[EC]/EC_AC/configs/shared_config.lua
+    ```
 
-Use least privilege. Keep “Owner” for a small number of trusted people.
+    Set the framework:
 
-<CardGroup>
-  <Card title="Owner" icon="crown">
-    Full access: settings, servers, bans, integrations.
-  </Card>
-  <Card title="Admin" icon="user-cog">
-    Moderation: ban/unban, screenshots, logs.
-  </Card>
-  <Card title="Moderator" icon="user">
-    Limited actions: screenshots, reports.
-  </Card>
-  <Card title="Viewer" icon="eye">
-    Read-only: logs and dashboards.
-  </Card>
-</CardGroup>
+    <Tabs>
+      <Tab title="ESX">
+      ```lua
+      EG_AC.Core = "es_extended"
+      ```
+      </Tab>
 
-### Recommended Discord mapping (example)
+      <Tab title="QBCore">
+      ```lua
+      EG_AC.Core = "qb-core"
+      ```
+      </Tab>
 
-| Discord role | Panel role | Why |
-|---|---|---|
-| Eagle | Admin | Normal staff actions |
-| Eagle Lead | Owner | Very few people |
-| Support | Viewer | Read logs without power |
+      <Tab title="Standalone">
+      ```lua
+      EG_AC.Core = "other"
+      ```
+      </Tab>
 
-<Warning>
-If your role mapping is wrong, you either lock staff out or give them too much control.
-</Warning>
+      <Tab title="vRP">
+      ```lua
+      EG_AC.Core = "vrp"
+      ```
+      </Tab>
+    </Tabs>
+  </Step>
 
-## 3) Logging defaults
+  <Step title="Configure EC-PANEL">
+    Open:
 
-Start with separate channels for:
-- detections
-- screenshots
-- system alerts
+    ```text
+    resources/[EC]/EC-PANEL/config.lua
+    ```
 
-This keeps evidence clean and avoids noise.
+    Set the core:
+
+    <Tabs>
+      <Tab title="ESX">
+      ```lua
+      Config.Framework = "es_extended"
+      ```
+      </Tab>
+
+      <Tab title="QBCore">
+      ```lua
+      Config.Framework = "qbcore"
+      ```
+      </Tab>
+
+      <Tab title="Standalone">
+      ```lua
+      Config.Framework = "standalone"
+      ```
+      </Tab>
+
+      <Tab title="vRP">
+      ```lua
+      Config.Framework = "vrp"
+      ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>
+
+---
