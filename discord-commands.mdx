@@ -1,16 +1,9 @@
 ---
 title: Discord Commands
-sidebarTitle: Commands
-description: Slash-command reference, arguments, and examples.
+sidebarTitle: Discord Commands
+description: Full reference for Eagle Discord slash commands, including arguments, permission requirements, and usage examples.
 ---
 
-# Discord Commands
-
-<img src="/images/commands.svg" alt="Commands" />
-
-<Info>
-Argument names below are examples. Replace them with your real slash-command schema.
-</Info>
 
 ## Command list
 
@@ -31,21 +24,12 @@ Argument names below are examples. Replace them with your real slash-command sch
 |---|---|---:|---|
 | `id` | number | Yes | `23` |
 | `reason` | string | Yes | `Cheating` |
-| `duration` | string | No | `7d`, `12h`, `perm` |
-| `silent` | boolean | No | `true` |
-| `proof` | string | No | URL to clip/screenshot |
 
 ### Examples
 
 <CodeGroup>
 ```text
 /ban id: 23 reason: "Cheating"
-```
-```text
-/ban id: 23 reason: "Aimbot" duration: "7d" proof: "https://clips.example.com/abc"
-```
-```text
-/ban id: 23 reason: "Injected menu" duration: "perm" silent: true
 ```
 </CodeGroup>
 
@@ -57,14 +41,12 @@ Argument names below are examples. Replace them with your real slash-command sch
 
 | Name | Type | Required | Example |
 |---|---|---:|---|
-| `identifier` | string | Yes | `license:xxxxxxxx` |
-| `reason` | string | No | `Appeal accepted` |
-| `whitelist` | boolean | No | `true` |
+| `banid` | number | Yes | `23` |
 
 ### Examples
 
 ```text
-/unban identifier: "license:xxxxxxxx" reason: "Appeal accepted"
+/unban banid: 23
 ```
 
 ---
@@ -76,17 +58,12 @@ Argument names below are examples. Replace them with your real slash-command sch
 | Name | Type | Required | Example |
 |---|---|---:|---|
 | `id` | number | Yes | `23` |
-| `note` | string | No | `Check UI overlays` |
 
 ### Example
 
 ```text
-/screenshot id: 23 note: "Suspected ESP"
+/screenshot id: 23
 ```
-
-<Note>
-Route screenshots to a dedicated channel so evidence doesn’t get buried.
-</Note>
 
 ---
 
@@ -96,14 +73,12 @@ Route screenshots to a dedicated channel so evidence doesn’t get buried.
 
 | Name | Type | Required | Example |
 |---|---|---:|---|
-| `server` | string | No | `main` |
-| `category` | string | No | `Eagle Logs` |
-| `private` | boolean | No | `true` |
+
 
 ### Example
 
 ```text
-/createwebhooks server: "main" category: "Eagle Logs" private: true
+/createwebhooks
 ```
 
 <Warning>
