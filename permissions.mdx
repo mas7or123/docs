@@ -116,7 +116,7 @@ Configure **both**, or staff will either get detected or bypass too much.
 
     EC-PANEL checks roles using:
     ```lua
-    qbcore.Functions.HasPermission(src, "<roleName>")
+    qbcore.Functions.HasPermission(src, "roleName")
     ```
 
     That means your `Config.Permissions` keys must match QBCore permission names you actually use, e.g.:
@@ -160,10 +160,6 @@ Configure **both**, or staff will either get detected or bypass too much.
     | `eagle.admin` | Staff | Normal bypass |
     | `eagle.superadmin` | Owners | High bypass |
 
-    <Warning>
-    If your file also checks `IsPlayerAceAllowed(src, "command")`, don’t grant `command` broadly (or remove it).
-    </Warning>
-
     ---
 
     ## EC-PANEL permissions (Standalone / ACE)
@@ -180,7 +176,7 @@ Configure **both**, or staff will either get detected or bypass too much.
 
     EC-PANEL checks roles like this:
     ```lua
-    IsPlayerAceAllowed(src, "<roleName>")
+    IsPlayerAceAllowed(src, "roleName")
     ```
 
     So if your role key is `superadmin`, you must grant ACE `superadmin`.
@@ -276,7 +272,7 @@ Configure **both**, or staff will either get detected or bypass too much.
 
     EC-PANEL checks roles using vRP permissions:
     ```lua
-    vRP.hasPermission({ user_id, "<roleName>" })
+    vRP.hasPermission({ user_id, "roleName" })
     ```
 
     So your role keys inside `Config.Permissions` must match your vRP permission strings.
@@ -304,7 +300,9 @@ Configure **both**, or staff will either get detected or bypass too much.
 ---
 
 <Check>
-If you set the framework correctly and still don’t have access:
-- EC_AC staff tools not working → EC_AC permission layer is wrong
-- Dashboard buttons disabled / actions failing → EC-PANEL permission layer is wrong
+After configuring EC-PANEL permissions, join the server and press **F10** to open the panel.
+
+If the panel opens → permissions are correct.  
+If nothing happens → your EC-PANEL role or framework permission mapping is wrong.
 </Check>
+
