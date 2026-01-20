@@ -1,62 +1,62 @@
 ---
-title: Eagle Anti-Cheat
-sidebarTitle: Overview
-description: Install, configure, and operate Eagle (anti-cheat) and EC-PANEL (dashboard sync).
+title: Welcome
+description: Welcome to the official documentation for Eagle Anti-Cheat.
 ---
 
-# Eagle Anti-Cheat
+# 👋 Welcome to the documentation
 
-<img src="/images/banner.svg" alt="Eagle Anti-Cheat" />
+Welcome to the official documentation for **Eagle Anti-Cheat** — a FiveM anti-cheat system built for stable detections, clean evidence, and fast staff workflows.
 
-<Info>
-This documentation contains **temporary example values** (download links, IDs, screenshots). Replace them with your real data.
-</Info>
+Here, you’ll find everything you need to get started, from installation to Discord setup and day‑to‑day operations.
 
-## Download
+---
 
-<Button href="https://download.example.com/eagle/latest.zip" icon="download">
-Download Eagle (Latest)
-</Button>
+## 🚀 Quick Start
 
-<Note>
-Replace the URL above with your real direct download link (store, portal, or signed link).
-</Note>
+Ready to jump in? Start here:
 
-## What you get
+- **[Installation Guide](/startup)** — Install Eagle under `resources/[EC]/` and ensure it first.
+- **[Configuration](/configuration)** — Framework selection + EC-PANEL permissions.
+- **[Discord Integration](/discord-integration)** — Connect dashboard, invite bot, create role, generate webhooks.
+- **[Discord Commands](/discord-commands)** — Full command list with arguments and examples.
+
+<Tip>
+If you only do one thing right: keep `ensure Eagle` at the top of your `server.cfg`.
+</Tip>
+
+---
+
+## What’s included
 
 <CardGroup>
-  <Card title="Server-side detections" icon="shield-check">
-    Core protections run server-side to stay reliable and hard to bypass.
+  <Card title="Eagle Resource" icon="shield-check">
+    The main anti-cheat resource. Runs detections and enforcement.
   </Card>
-  <Card title="Dashboard control" icon="layout-dashboard">
-    Manage bans, permissions, logs, and servers from a single panel.
+  <Card title="EC-PANEL" icon="layout-dashboard">
+    Dashboard sync and role-based permissions.
   </Card>
-  <Card title="Discord commands" icon="message-square">
-    Staff actions and evidence collection via slash commands.
+  <Card title="Discord Bot" icon="message-square">
+    Slash commands, logging, webhook automation, staff verification.
   </Card>
 </CardGroup>
 
-## Architecture
+---
 
-<img src="/images/architecture.svg" alt="Architecture diagram" />
+## Typical folder structure
 
-| Component | Purpose | Required |
-|---|---|---|
-| `Eagle` | Main anti-cheat resource | Yes |
-| `EC-PANEL` | Dashboard sync + permissions | Yes |
-| Discord bot | Commands + logging | Recommended |
-| Dashboard | Management + visibility | Recommended |
+```text
+server/
+  resources/
+    [EC]/
+      EC-EC/
+      EC-PANEL/
+```
 
-## Next steps
+<Note>
+`[EC]` is your category folder. Do not rename the resources: keep **EC_AC** and **EC-PANEL** exactly.
+</Note>
 
-<Steps>
-  <Step title="Install">
-    Put the resources under your FiveM resources category folder **[EC]** and ensure **Eagle** first.
-  </Step>
-  <Step title="Configure">
-    Select your framework in both `Eagle` and `EC-PANEL`, then map permissions.
-  </Step>
-  <Step title="Connect Discord">
-    Invite the bot, create the Eagle staff role, and generate webhooks.
-  </Step>
-</Steps>
+---
+
+Happy building,  
+**Eagle Anti-Cheat Team**
