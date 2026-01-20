@@ -12,6 +12,7 @@
     "light": "/logo/logo.png",
     "dark": "/logo/logo.png"
   },
+  "library": "lucide",
   "navigation": {
     "tabs": [
       {
