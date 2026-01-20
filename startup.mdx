@@ -1,78 +1,105 @@
 ---
-title: Startup & Installation
+title: Installation
 sidebarTitle: Installation
-description: Correct folder structure, server.cfg order, and verification.
+description: Follow these steps to install Eagle Anti-Cheat on your FiveM server.
 ---
 
-# Startup & Installation
+# Installation Guide
 
-<img src="/images/install.svg" alt="Installation" />
+Follow these steps to set up **Eagle Anti-Cheat** on your FiveM server.
 
-<Warning>
-Most installs break for two reasons: **renaming the resource** or **starting it late**. Don’t do either.
-</Warning>
+---
 
-## Folder structure (required)
+## Purchase a License Key
 
-Your resources must be placed like this:
+Purchase a license key from our **[Store](https://eagleanti.com/en/products)**.
+
+---
+
+## Download the Resource
+
+After purchasing, open your **[Dashboard](https://eagleanti.com/en/dashboard)** and click **Download** to get the latest version.
+
+---
+
+## Install the Resource
+
+Extract the downloaded ZIP and place the folders into your server’s `resources` directory under **`[EC]`**.
+
+### Required folder structure
 
 ```text
 server/
   resources/
     [EC]/
-      Eagle/
+      EC_AC/
       EC-PANEL/
 ```
 
-<Note>
-`[EC]` is just a category folder. The resource names are **Eagle** and **EC-PANEL**.
-</Note>
+<Warning>
+Do **not** rename `EC_AC`, `EC-PANEL`, or the `[EC]` bracket folder format. Renaming can break internal references and updates.
+</Warning>
 
-## Install steps
+---
 
-<Steps>
-  <Step title="Extract">
-    Unzip the download on your machine.
-  </Step>
-  <Step title="Place resources">
-    Move the folders into: `resources/[EC]/`
-  </Step>
-  <Step title="Do not rename">
-    Keep folder names **exactly**: `Eagle` and `EC-PANEL`.
-  </Step>
-  <Step title="Ensure order">
-    Ensure **Eagle first** in `server.cfg`.
-  </Step>
-</Steps>
+## Add to server.cfg
+
+Open your **server.cfg** and ensure [EC] starts **first**.
 
 <CodeGroup>
 ```cfg server.cfg (minimum)
-ensure Eagle
-ensure EC-PANEL
+ensure [EC]
 ```
+
 ```cfg server.cfg (recommended order)
-ensure Eagle
-ensure EC-PANEL
+ensure [EC]
 
-# framework + DB next
-ensure oxmysql
-ensure es_extended
+sv_hostname "change-me built with FiveM Basic Server!"
+sets sv_projectName "[FiveM Basic Server] change-me"
+sets sv_projectDesc "Recipe for the base resources required to run a minimal FiveM server."
+sets tags "default, deployer"
+sets locale "root-AQ"
 
-# everything else after
-ensure [standalone]
-ensure [jobs]
-ensure [cars]
+## You CAN edit the following:
+sv_enforceGameBuild 3258 #mp2024_01	- Bottom Dollar Bounties
+sv_licenseKey "xxxxx"
+sv_maxclients 48
+endpoint_add_tcp "0.0.0.0:30120"
+endpoint_add_udp "0.0.0.0:30120"
+set steam_webApiKey "none"
+set resources_useSystemChat true
+
+set mumble_allowExternalConnections true
+set mumble_adminPass "YourMumbleServerPassword"
+setr mumble_adminPass "YourMumbleServerPassword"
+
+## These resources will start by default.
+ensure mapmanager
+ensure chat
+ensure spawnmanager
+ensure sessionmanager
+ensure basic-gamemode
+ensure hardcap
 ```
 </CodeGroup>
 
-## Verify it’s running
-
 <Check>
-You should see all of these:
+If `ensure [EC]` is at the top, you avoid most problems.
 </Check>
 
-- Server console shows an Eagle startup line (replace with your real log text later)
-- Dashboard shows server status: **Online**
-- Discord bot appears: **Online**
+---
 
-<img src="/images/console.svg" alt="Console output example" />
+## Restart the Server
+
+Restart your server to apply the changes.
+
+After restart, verify:
+
+- Console shows an Eagle startup message after all resources are loaded
+- Dashboard shows the server as **Online**
+
+---
+
+## Installation Guide Video
+
+For a full walkthrough, watch the **[Installation Guide Video](https://youtu.be/cAjfL6IA6Zc)**.
