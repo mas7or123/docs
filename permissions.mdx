@@ -1,265 +1,310 @@
 ---
 title: Permissions
 sidebarTitle: Permissions
-description: EC_AC in-game bypass permissions and EC-PANEL dashboard permissions (fully explained).
+description: Select your framework and configure the correct EC_AC and EC-PANEL permission system.
 ---
 
 # Info
 
-Eagle uses **two separate permission layers**:
-
-- **EC_AC permissions**: control in-game bypass + staff features (framework-specific)
-- **EC-PANEL permissions**: control what staff can do inside the dashboard (role-based flags)
+Pick your framework below. Each tab shows the **correct permission system** for **EC_AC** and **EC-PANEL**.
 
 <Warning>
-These systems are independent. Giving someone EC_AC bypass does **not** automatically give EC-PANEL access (and vice versa).
+EC_AC permissions and EC-PANEL permissions are separate.  
+Configure **both**, or staff will either get detected or bypass too much.
 </Warning>
 
 ---
 
-## EC_AC permissions
+<Tabs>
+  <Tab title="ESX (es_extended)">
+    ## EC_AC permissions (ESX)
 
-EC_AC permissions exist so staff can moderate (noclip, spectate, cleanup, etc.) without triggering detections.
+    **File**
+    ```text
+    resources/[EC]/EC_AC/configs/esx/s_config.lua
+    ```
 
-### Two permission levels
+    EC_AC uses ESX player groups via `xPlayer.getGroup()`.
 
-| Level | Name in code | Who should have it | What it allows |
-|---|---|---|---|
-| Normal bypass | `PermCheck` | Staff/admins | Bypass staff-only restrictions and staff actions that would otherwise trigger detections |
-| High bypass | `PermHighCheck` | Owners only | Full bypass (highest trust). Use only for owners |
+    | Check | Default groups | Who should have it | What it does |
+    |---|---|---|---|
+    | `EG_AC.PermCheck(source)` | `admin`, `superadmin` | Staff | Normal bypass for staff actions (noclip/spectate/invis/godmode used for moderation) |
+    | `EG_AC.PermHighCheck(source)` | `superadmin` | Owners | High bypass (full bypass). Keep it very limited |
 
-<Warning>
-High bypass is basically “ignore protection”. Do not give it to normal staff.
-</Warning>
+    <Tip>
+    If you use custom ESX groups, add them inside `PermCheck` / `PermHighCheck`.
+    </Tip>
 
----
+    ---
 
-### ESX permissions (groups)
+    ## EC-PANEL permissions (ESX)
 
-**File**
-```text
-resources/[EC]/EC_AC/configs/esx/s_config.lua
-```
+    **File**
+    ```text
+    resources/[EC]/EC-PANEL/config.lua
+    ```
 
-| Group | Applies to | What it does |
-|---|---|---|
-| `admin` | `EG_AC.PermCheck(source)` | Normal staff bypass |
-| `superadmin` | `EG_AC.PermCheck(source)` + `EG_AC.PermHighCheck(source)` | Normal + High bypass |
+    Set:
+    ```lua
+    Config.Framework = "es_extended"
+    ```
 
-<Note>
-If you use custom ESX groups, add them inside the checks in `s_config.lua`.
-</Note>
+    EC-PANEL checks permission by comparing ESX group name to the role key:
 
----
+    - If `xPlayer.getGroup() == "superadmin"` → role `superadmin` applies
+    - If `xPlayer.getGroup() == "admin"` → role `admin` applies (if you define it)
 
-### QBCore permissions (roles + ACE fallback)
+    <Info>
+    You must create the roles you want inside `Config.Permissions` (example: `admin`, `moderator`, `viewer`).
+    </Info>
 
-**File**
-```text
-resources/[EC]/EC_AC/configs/qbcore/s_config.lua
-```
+    ### Dashboard action flags (what each one does)
 
-#### Role lists
+    These flags enable features in the dashboard:
 
-| List | Who should have it | What it does |
-|---|---|---|
-| `EG_AC.Perm` | Staff/admins | Normal bypass |
-| `EG_AC.HighPerm` | Owners | High bypass |
+    | Flag | What it enables |
+    |---|---|
+    | `AccessToken` | High-privilege access (banlist/whitelist/loggers/stats). Owner-only |
+    | `getPlayersData` | Players list |
+    | `banPlayer` | Ban action |
+    | `mutePlayer` / `unmute` | Mute control |
+    | `watchScreen` | Watch player screen |
+    | `toggleFreecam` | Freecam tool |
+    | `grabEntity` / `tpEntity` / `deleteEntity` | Entity tools |
+    | `blacklistModel` / `unblacklistModel` / `getBlacklistData` | Model blacklist |
+    | `toggleBoxESP` / `toggleSkeletonESP` / etc. | ESP tools |
+  </Tab>
 
-**Default values**
-```lua
-EG_AC.Perm = {
-  "admin",
-  "god",
-}
+  <Tab title="QBCore (qb-core)">
+    ## EC_AC permissions (QBCore)
 
-EG_AC.HighPerm = {
-  "god",
-}
-```
+    **File**
+    ```text
+    resources/[EC]/EC_AC/configs/qbcore/s_config.lua
+    ```
 
-#### ACE fallback checks
+    QBCore uses permission roles lists:
 
-Your script also allows bypass using ACE permissions:
+    | List | Default | Who should have it | What it does |
+    |---|---|---|---|
+    | `EG_AC.Perm` | `admin`, `god` | Staff | Normal bypass |
+    | `EG_AC.HighPerm` | `god` | Owners | High bypass (full bypass) |
 
-- `qbcore.admin`
-- `qbcore.mod`
-- `qbcore.god`
+    **Default**
+    ```lua
+    EG_AC.Perm = { "admin", "god" }
+    EG_AC.HighPerm = { "god" }
+    ```
 
-<Warning>
-If you grant these broadly, many people will receive bypass.
-</Warning>
+    <Note>
+    Your config also accepts ACE fallbacks like `qbcore.admin`, `qbcore.mod`, `qbcore.god`.
+    </Note>
 
----
+    ---
 
-### Standalone permissions (ACE)
+    ## EC-PANEL permissions (QBCore)
 
-**File**
-```text
-resources/[EC]/EC_AC/configs/other/s_config.lua
-```
+    **File**
+    ```text
+    resources/[EC]/EC-PANEL/config.lua
+    ```
 
-| ACE permission | Who should have it | What it does |
-|---|---|---|
-| `eagle.admin` | Staff/admins | Normal bypass |
-| `eagle.superadmin` | Owners | High bypass |
+    Set:
+    ```lua
+    Config.Framework = "qbcore"
+    ```
 
-<Tip>
-If your file also checks `IsPlayerAceAllowed(src, "command")`, avoid granting `command` broadly or remove that part.
-</Tip>
+    EC-PANEL checks roles using:
+    ```lua
+    qbcore.Functions.HasPermission(src, "<roleName>")
+    ```
 
----
+    That means your `Config.Permissions` keys must match QBCore permission names you actually use, e.g.:
 
-### vRP permissions (fine-grained)
+    - `superadmin`
+    - `admin`
+    - `god`
+    - `mod`
 
-**File**
-```text
-resources/[EC]/EC_AC/configs/vrp/shared_config.lua
-```
+    <Tip>
+    Best practice: use clean role names like `superadmin/admin/moderator/viewer` and map them in QBCore.
+    </Tip>
 
-#### Bypass levels
+    ### Dashboard action flags (what each one does)
 
-| Permission | Who should have it | What it does |
-|---|---|---|
-| `EG_AC_PERMS.Perm` (default: `admin.tickets`) | Admins | Normal bypass |
-| `EG_AC_PERMS.HighPerm` (default: `eagle.HighPerm`) | Owners | High bypass |
+    | Flag | What it enables |
+    |---|---|
+    | `AccessToken` | High-privilege access (banlist/whitelist/loggers/stats). Owner-only |
+    | `getPlayersData` | Players list |
+    | `banPlayer` | Ban action |
+    | `mutePlayer` / `unmute` | Mute control |
+    | `watchScreen` | Watch player screen |
+    | `toggleFreecam` | Freecam tool |
+    | `grabEntity` / `tpEntity` / `deleteEntity` | Entity tools |
+    | `blacklistModel` / `unblacklistModel` / `getBlacklistData` | Model blacklist |
+    | `toggleBoxESP` / `toggleSkeletonESP` / etc. | ESP tools |
+  </Tab>
 
-#### Feature permissions
+  <Tab title="Standalone (ACE)">
+    ## EC_AC permissions (Standalone)
 
-**Menu & moderation**
+    **File**
+    ```text
+    resources/[EC]/EC_AC/configs/other/s_config.lua
+    ```
 
-| Permission | What it does |
-|---|---|
-| `eagle.Menu` | Access to Eagle staff menu (owner-only recommended) |
-| `eagle.BanPlayer` | Ban from staff menu |
-| `eagle.UnBanPlayer` | Unban from staff menu |
+    EC_AC uses ACE permissions:
 
-**Entity cleanup**
+    | ACE | Who should have it | What it does |
+    |---|---|---|
+    | `eagle.admin` | Staff | Normal bypass |
+    | `eagle.superadmin` | Owners | High bypass |
 
-| Permission | What it does |
-|---|---|
-| `eagle.DeleteObjects` | Delete objects |
-| `eagle.DeletePeds` | Delete peds |
-| `eagle.DeleteVehicles` | Delete vehicles |
-| `eagle.DeleteGun` | Delete-gun tool |
+    <Warning>
+    If your file also checks `IsPlayerAceAllowed(src, "command")`, don’t grant `command` broadly (or remove it).
+    </Warning>
 
-**Bypass detections for staff**
+    ---
 
-| Permission | What it does |
-|---|---|
-| `eagle.Spectate` | Bypass spectate restrictions/detections |
-| `eagle.NoClip` | Bypass noclip/fly detections |
-| `eagle.Invisible` | Bypass invis detections |
-| `eagle.GodMode` | Bypass godmode detections |
-| `eagle.AntiFreeCam` | Bypass freecam detection |
-| `eagle.SuperJump` | Bypass super jump detection |
-| `eagle.WeaponDamage` | Bypass weapon damage modifier detection |
+    ## EC-PANEL permissions (Standalone / ACE)
 
-**Testing bypass**
+    **File**
+    ```text
+    resources/[EC]/EC-PANEL/config.lua
+    ```
 
-| Permission | What it does |
-|---|---|
-| `eagle.BlackListedVehiclesPerm` | Allow blacklisted vehicles |
-| `eagle.BlackListedWeaponsPerm` | Allow blacklisted weapons |
-| `eagle.vMenu` | Allow vMenu usage |
-| `eagle.Stamina` | Infinite stamina |
+    Set:
+    ```lua
+    Config.Framework = "standalone"
+    ```
 
-**Chat / info**
+    EC-PANEL checks roles like this:
+    ```lua
+    IsPlayerAceAllowed(src, "<roleName>")
+    ```
 
-| Permission | What it does |
-|---|---|
-| `eagle.ChatSettings` | Control chat settings |
-| `eagle.ChatBypass` | Talk while chat is locked |
-| `eagle.ChatCharaterLimitPerm` | Bypass chat character limit |
-| `eagle.RecentlyJoined` | View recently joined players |
-| `eagle.OnScreenMenuPerm` | Bypass restricted words/on-screen checks |
+    So if your role key is `superadmin`, you must grant ACE `superadmin`.
 
----
+    <Tip>
+    Most people do this with principals. Example (adjust to your server):
+    </Tip>
 
-## EC-PANEL permissions (Dashboard)
+    ```cfg
+    add_ace group.admin superadmin allow
+    add_ace group.admin admin allow
+    add_ace group.admin moderator allow
+    add_ace group.admin viewer allow
+    ```
 
-**File**
-```text
-resources/[EC]/EC-PANEL/config.lua
-```
+    ### Dashboard action flags (what each one does)
 
-### How it works
+    | Flag | What it enables |
+    |---|---|
+    | `AccessToken` | High-privilege access (banlist/whitelist/loggers/stats). Owner-only |
+    | `getPlayersData` | Players list |
+    | `banPlayer` | Ban action |
+    | `mutePlayer` / `unmute` | Mute control |
+    | `watchScreen` | Watch player screen |
+    | `toggleFreecam` | Freecam tool |
+    | `grabEntity` / `tpEntity` / `deleteEntity` | Entity tools |
+    | `blacklistModel` / `unblacklistModel` / `getBlacklistData` | Model blacklist |
+    | `toggleBoxESP` / `toggleSkeletonESP` / etc. | ESP tools |
+  </Tab>
 
-- Roles are defined in `Config.Permissions`
-- The panel checks access using: `Config.checkPermission(src, permission)`
+  <Tab title="vRP (vrp)">
+    ## EC_AC permissions (vRP)
 
-### Recommended roles
+    **File**
+    ```text
+    resources/[EC]/EC_AC/configs/vrp/shared_config.lua
+    ```
 
-| Role | Goal |
-|---|---|
-| `superadmin` | Owner-level control |
-| `admin` | Moderation + evidence tools |
-| `moderator` | Evidence only |
-| `viewer` | Read-only |
+    vRP supports both bypass + fine-grained feature permissions.
 
----
+    ### Bypass levels
 
-### Permission glossary
+    | Permission | Default | Who should have it | What it does |
+    |---|---|---|---|
+    | `EG_AC_PERMS.Perm` | `admin.tickets` | Staff | Normal bypass |
+    | `EG_AC_PERMS.HighPerm` | `eagle.HighPerm` | Owners | High bypass (full bypass) |
 
-**System / sensitive**
+    ### Feature permissions
 
-| Permission | What it does |
-|---|---|
-| `AccessToken` | Master access (banlist/whitelist/loggers/stats). Owner-only |
-| `togglePanicMode` | Toggle panic mode |
-| `panicMode` | Read panic mode status |
+    | Permission | What it does |
+    |---|---|
+    | `eagle.Menu` | Access to Eagle staff menu |
+    | `eagle.NoClip` | Bypass noclip/fly detections |
+    | `eagle.Spectate` | Bypass spectate detection/limits |
+    | `eagle.Invisible` | Bypass invis detections |
+    | `eagle.GodMode` | Bypass godmode detections |
+    | `eagle.AntiFreeCam` | Bypass freecam detection |
+    | `eagle.SuperJump` | Bypass super jump detection |
+    | `eagle.WeaponDamage` | Bypass weapon damage modifier detection |
+    | `eagle.Stamina` | Infinite stamina |
+    | `eagle.BlackListedWeaponsPerm` | Allow blacklisted weapons |
+    | `eagle.BlackListedVehiclesPerm` | Allow blacklisted vehicles |
+    | `eagle.DeleteObjects` | Delete objects |
+    | `eagle.DeletePeds` | Delete peds |
+    | `eagle.DeleteVehicles` | Delete vehicles |
+    | `eagle.DeleteGun` | Delete-gun tool |
+    | `eagle.BanPlayer` | Ban from staff menu |
+    | `eagle.UnBanPlayer` | Unban from staff menu |
+    | `eagle.ChatSettings` | Control chat settings |
+    | `eagle.ChatBypass` | Talk while chat is locked |
+    | `eagle.ChatCharaterLimitPerm` | Bypass chat char limit |
+    | `eagle.RecentlyJoined` | View recently joined players |
+    | `eagle.OnScreenMenuPerm` | Bypass restricted words/on-screen checks |
+    | `eagle.vMenu` | Allow vMenu usage |
 
-**Players**
+    <Warning>
+    Don’t give `eagle.HighPerm` broadly. It’s a full bypass.
+    </Warning>
 
-| Permission | What it does |
-|---|---|
-| `getPlayersData` | View players list |
-| `getStats` | View server stats |
-| `changeRoutingBucket` | Change player routing bucket |
-| `tpToPlayer` | Teleport to player |
+    ---
 
-**Punishments**
+    ## EC-PANEL permissions (vRP)
 
-| Permission | What it does |
-|---|---|
-| `banPlayer` | Ban player |
-| `mutePlayer` | Mute player |
-| `unmute` | Unmute player |
-| `getMutedData` | View mute list |
+    **File**
+    ```text
+    resources/[EC]/EC-PANEL/config.lua
+    ```
 
-**Evidence / tools**
+    Set:
+    ```lua
+    Config.Framework = "vrp"
+    ```
 
-| Permission | What it does |
-|---|---|
-| `watchScreen` | Watch player screen |
-| `toggleFreecam` | Toggle freecam |
-| `grabEntity` | Inspect entity via freecam |
-| `tpEntity` | Teleport to entity |
-| `deleteEntity` | Delete entity |
+    EC-PANEL checks roles using vRP permissions:
+    ```lua
+    vRP.hasPermission({ user_id, "<roleName>" })
+    ```
 
-**Blacklist**
+    So your role keys inside `Config.Permissions` must match your vRP permission strings.
 
-| Permission | What it does |
-|---|---|
-| `blacklistModel` | Blacklist a model |
-| `unblacklistModel` | Unblacklist a model |
-| `clearBlacklist` | Clear blacklist (dangerous) |
-| `getBlacklistData` | View blacklist |
+    <Tip>
+    Example: if you keep `superadmin` as the role key, your vRP user must have permission `superadmin`.
+    </Tip>
 
-**ESP toggles**
+    ### Dashboard action flags (what each one does)
 
-| Permission | What it does |
-|---|---|
-| `toggleShowSelf` | Show self in ESP |
-| `toggleBoxESP` | Box ESP |
-| `toggleSkeletonESP` | Skeleton ESP |
-| `toggleHealthBar` | Health bar ESP |
-| `toggleArmorBar` | Armor bar ESP |
-| `toggleESPLine` | ESP lines |
-| `toggleNameTag` | Name tag ESP |
+    | Flag | What it enables |
+    |---|---|
+    | `AccessToken` | High-privilege access (banlist/whitelist/loggers/stats). Owner-only |
+    | `getPlayersData` | Players list |
+    | `banPlayer` | Ban action |
+    | `mutePlayer` / `unmute` | Mute control |
+    | `watchScreen` | Watch player screen |
+    | `toggleFreecam` | Freecam tool |
+    | `grabEntity` / `tpEntity` / `deleteEntity` | Entity tools |
+    | `blacklistModel` / `unblacklistModel` / `getBlacklistData` | Model blacklist |
+    | `toggleBoxESP` / `toggleSkeletonESP` / etc. | ESP tools |
+  </Tab>
+</Tabs>
 
 ---
 
 <Check>
-If staff can use in-game tools but not the panel (or vice versa), one of the permission layers is misconfigured.
+If you set the framework correctly and still don’t have access:
+- EC_AC staff tools not working → EC_AC permission layer is wrong
+- Dashboard buttons disabled / actions failing → EC-PANEL permission layer is wrong
 </Check>
