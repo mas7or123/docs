@@ -1,0 +1,265 @@
+---
+title: Permissions
+sidebarTitle: Permissions
+description: EC_AC in-game bypass permissions and EC-PANEL dashboard permissions (fully explained).
+---
+
+# Info
+
+Eagle uses **two separate permission layers**:
+
+- **EC_AC permissions**: control in-game bypass + staff features (framework-specific)
+- **EC-PANEL permissions**: control what staff can do inside the dashboard (role-based flags)
+
+<Warning>
+These systems are independent. Giving someone EC_AC bypass does **not** automatically give EC-PANEL access (and vice versa).
+</Warning>
+
+---
+
+## EC_AC permissions
+
+EC_AC permissions exist so staff can moderate (noclip, spectate, cleanup, etc.) without triggering detections.
+
+### Two permission levels
+
+| Level | Name in code | Who should have it | What it allows |
+|---|---|---|---|
+| Normal bypass | `PermCheck` | Staff/admins | Bypass staff-only restrictions and staff actions that would otherwise trigger detections |
+| High bypass | `PermHighCheck` | Owners only | Full bypass (highest trust). Use only for owners |
+
+<Warning>
+High bypass is basically “ignore protection”. Do not give it to normal staff.
+</Warning>
+
+---
+
+### ESX permissions (groups)
+
+**File**
+```text
+resources/[EC]/EC_AC/configs/esx/s_config.lua
+```
+
+| Group | Applies to | What it does |
+|---|---|---|
+| `admin` | `EG_AC.PermCheck(source)` | Normal staff bypass |
+| `superadmin` | `EG_AC.PermCheck(source)` + `EG_AC.PermHighCheck(source)` | Normal + High bypass |
+
+<Note>
+If you use custom ESX groups, add them inside the checks in `s_config.lua`.
+</Note>
+
+---
+
+### QBCore permissions (roles + ACE fallback)
+
+**File**
+```text
+resources/[EC]/EC_AC/configs/qbcore/s_config.lua
+```
+
+#### Role lists
+
+| List | Who should have it | What it does |
+|---|---|---|
+| `EG_AC.Perm` | Staff/admins | Normal bypass |
+| `EG_AC.HighPerm` | Owners | High bypass |
+
+**Default values**
+```lua
+EG_AC.Perm = {
+  "admin",
+  "god",
+}
+
+EG_AC.HighPerm = {
+  "god",
+}
+```
+
+#### ACE fallback checks
+
+Your script also allows bypass using ACE permissions:
+
+- `qbcore.admin`
+- `qbcore.mod`
+- `qbcore.god`
+
+<Warning>
+If you grant these broadly, many people will receive bypass.
+</Warning>
+
+---
+
+### Standalone permissions (ACE)
+
+**File**
+```text
+resources/[EC]/EC_AC/configs/other/s_config.lua
+```
+
+| ACE permission | Who should have it | What it does |
+|---|---|---|
+| `eagle.admin` | Staff/admins | Normal bypass |
+| `eagle.superadmin` | Owners | High bypass |
+
+<Tip>
+If your file also checks `IsPlayerAceAllowed(src, "command")`, avoid granting `command` broadly or remove that part.
+</Tip>
+
+---
+
+### vRP permissions (fine-grained)
+
+**File**
+```text
+resources/[EC]/EC_AC/configs/vrp/shared_config.lua
+```
+
+#### Bypass levels
+
+| Permission | Who should have it | What it does |
+|---|---|---|
+| `EG_AC_PERMS.Perm` (default: `admin.tickets`) | Admins | Normal bypass |
+| `EG_AC_PERMS.HighPerm` (default: `eagle.HighPerm`) | Owners | High bypass |
+
+#### Feature permissions
+
+**Menu & moderation**
+
+| Permission | What it does |
+|---|---|
+| `eagle.Menu` | Access to Eagle staff menu (owner-only recommended) |
+| `eagle.BanPlayer` | Ban from staff menu |
+| `eagle.UnBanPlayer` | Unban from staff menu |
+
+**Entity cleanup**
+
+| Permission | What it does |
+|---|---|
+| `eagle.DeleteObjects` | Delete objects |
+| `eagle.DeletePeds` | Delete peds |
+| `eagle.DeleteVehicles` | Delete vehicles |
+| `eagle.DeleteGun` | Delete-gun tool |
+
+**Bypass detections for staff**
+
+| Permission | What it does |
+|---|---|
+| `eagle.Spectate` | Bypass spectate restrictions/detections |
+| `eagle.NoClip` | Bypass noclip/fly detections |
+| `eagle.Invisible` | Bypass invis detections |
+| `eagle.GodMode` | Bypass godmode detections |
+| `eagle.AntiFreeCam` | Bypass freecam detection |
+| `eagle.SuperJump` | Bypass super jump detection |
+| `eagle.WeaponDamage` | Bypass weapon damage modifier detection |
+
+**Testing bypass**
+
+| Permission | What it does |
+|---|---|
+| `eagle.BlackListedVehiclesPerm` | Allow blacklisted vehicles |
+| `eagle.BlackListedWeaponsPerm` | Allow blacklisted weapons |
+| `eagle.vMenu` | Allow vMenu usage |
+| `eagle.Stamina` | Infinite stamina |
+
+**Chat / info**
+
+| Permission | What it does |
+|---|---|
+| `eagle.ChatSettings` | Control chat settings |
+| `eagle.ChatBypass` | Talk while chat is locked |
+| `eagle.ChatCharaterLimitPerm` | Bypass chat character limit |
+| `eagle.RecentlyJoined` | View recently joined players |
+| `eagle.OnScreenMenuPerm` | Bypass restricted words/on-screen checks |
+
+---
+
+## EC-PANEL permissions (Dashboard)
+
+**File**
+```text
+resources/[EC]/EC-PANEL/config.lua
+```
+
+### How it works
+
+- Roles are defined in `Config.Permissions`
+- The panel checks access using: `Config.checkPermission(src, permission)`
+
+### Recommended roles
+
+| Role | Goal |
+|---|---|
+| `superadmin` | Owner-level control |
+| `admin` | Moderation + evidence tools |
+| `moderator` | Evidence only |
+| `viewer` | Read-only |
+
+---
+
+### Permission glossary
+
+**System / sensitive**
+
+| Permission | What it does |
+|---|---|
+| `AccessToken` | Master access (banlist/whitelist/loggers/stats). Owner-only |
+| `togglePanicMode` | Toggle panic mode |
+| `panicMode` | Read panic mode status |
+
+**Players**
+
+| Permission | What it does |
+|---|---|
+| `getPlayersData` | View players list |
+| `getStats` | View server stats |
+| `changeRoutingBucket` | Change player routing bucket |
+| `tpToPlayer` | Teleport to player |
+
+**Punishments**
+
+| Permission | What it does |
+|---|---|
+| `banPlayer` | Ban player |
+| `mutePlayer` | Mute player |
+| `unmute` | Unmute player |
+| `getMutedData` | View mute list |
+
+**Evidence / tools**
+
+| Permission | What it does |
+|---|---|
+| `watchScreen` | Watch player screen |
+| `toggleFreecam` | Toggle freecam |
+| `grabEntity` | Inspect entity via freecam |
+| `tpEntity` | Teleport to entity |
+| `deleteEntity` | Delete entity |
+
+**Blacklist**
+
+| Permission | What it does |
+|---|---|
+| `blacklistModel` | Blacklist a model |
+| `unblacklistModel` | Unblacklist a model |
+| `clearBlacklist` | Clear blacklist (dangerous) |
+| `getBlacklistData` | View blacklist |
+
+**ESP toggles**
+
+| Permission | What it does |
+|---|---|
+| `toggleShowSelf` | Show self in ESP |
+| `toggleBoxESP` | Box ESP |
+| `toggleSkeletonESP` | Skeleton ESP |
+| `toggleHealthBar` | Health bar ESP |
+| `toggleArmorBar` | Armor bar ESP |
+| `toggleESPLine` | ESP lines |
+| `toggleNameTag` | Name tag ESP |
+
+---
+
+<Check>
+If staff can use in-game tools but not the panel (or vice versa), one of the permission layers is misconfigured.
+</Check>
